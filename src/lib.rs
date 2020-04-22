@@ -3,6 +3,9 @@ pub mod alter;
 pub mod octave;
 pub mod interval;
 
+use interval::IntervalType::*;
+use interval::Degree::*;
+
 const OCTAVE_SCALE_STEPS: u32 = 7;
 const OCTAVE_CHROMATIC_STEPS: u32 = 12;
 
@@ -28,13 +31,13 @@ pub fn interval(note_1: &Note, note_2: &Note) -> interval::Interval {
 
 fn degree_number(note_1: &Note, note_2: &Note) -> interval::Degree {
     match scale_interval(note_1, note_2) {
-        0 => interval::Degree::Unison,
-        1 => interval::Degree::Second,
-        2 => interval::Degree::Third,
-        3 => interval::Degree::Fourth,
-        4 => interval::Degree::Fifth,
-        5 => interval::Degree::Sixth,
-        6 => interval::Degree::Seventh,
+        0 => Unison,
+        1 => Second,
+        2 => Third,
+        3 => Fourth,
+        4 => Fifth,
+        5 => Sixth,
+        6 => Seventh,
         _ => panic!()
         // TODO: add "Octave"
         // TODO: add errMsg
@@ -44,82 +47,82 @@ fn degree_number(note_1: &Note, note_2: &Note) -> interval::Degree {
 fn degree_prefix(note_1: &Note, note_2: &Note, degree_number: &interval::Degree) -> interval::IntervalType {
     let ci = chromatic_interval(note_1, note_2) as i32;
     match degree_number {
-        interval::Degree::Unison => {
+        Unison => {
             match ci {
-                0 => interval::IntervalType::Perfect,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                0 => Perfect,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         }
-        interval::Degree::Second => {
+        Second => {
             match ci - 2 {
-                -2 => interval::IntervalType::Diminish,
-                -1 => interval::IntervalType::Minor,
-                0 => interval::IntervalType::Major,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -2 => Diminish,
+                -1 => Minor,
+                0 => Major,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         }
-        interval::Degree::Third => {
+        Third => {
             match ci - 4 {
-                -3 => interval::IntervalType::DoubleDiminish,
-                -2 => interval::IntervalType::Diminish,
-                -1 => interval::IntervalType::Minor,
-                0 => interval::IntervalType::Major,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -3 => DoubleDiminish,
+                -2 => Diminish,
+                -1 => Minor,
+                0 => Major,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         },
         interval:: Degree::Fourth => {
             match ci - 5 {
-                -2 => interval::IntervalType::DoubleDiminish,
-                -1 => interval::IntervalType::Diminish,
-                0 => interval::IntervalType::Perfect,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -2 => DoubleDiminish,
+                -1 => Diminish,
+                0 => Perfect,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         },
-        interval::Degree::Fifth => {
+        Fifth => {
             match ci - 7 {
-                -2 => interval::IntervalType::DoubleDiminish,
-                -1 => interval::IntervalType::Diminish,
-                0 => interval::IntervalType::Perfect,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -2 => DoubleDiminish,
+                -1 => Diminish,
+                0 => Perfect,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         },
-        interval::Degree::Sixth => {
+        Sixth => {
             match ci - 9 {
-                -3 => interval::IntervalType::DoubleDiminish,
-                -2 => interval::IntervalType::Diminish,
-                -1 => interval::IntervalType::Minor,
-                0 => interval::IntervalType::Major,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -3 => DoubleDiminish,
+                -2 => Diminish,
+                -1 => Minor,
+                0 => Major,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         },
-        interval::Degree::Seventh => {
+        Seventh => {
             match ci - 11 {
-                -3 => interval::IntervalType::DoubleDiminish,
-                -2 => interval::IntervalType::Diminish,
-                -1 => interval::IntervalType::Minor,
-                0 => interval::IntervalType::Major,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                -3 => DoubleDiminish,
+                -2 => Diminish,
+                -1 => Minor,
+                0 => Major,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         },
-        interval::Degree::Octave => {
+        Octave => {
             match ci - 12 {
-                0 => interval::IntervalType::Perfect,
-                1 => interval::IntervalType::Augment,
-                2 => interval::IntervalType::DoubleAugument,
+                0 => Perfect,
+                1 => Augment,
+                2 => DoubleAugument,
                 _ => panic!()
             }
         }
