@@ -1,13 +1,8 @@
 # score_analyzation
-analyze music score. work in progress.
-
-
-
+--
+--
 current status (22 April 2020)
-
-
-
-
+--
 ---- calc pitch interval of 2 musical note ----
 
 note_1 Note { step: C, alter: Sharp, octave: Octave(3) }
