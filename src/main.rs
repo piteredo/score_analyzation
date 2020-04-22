@@ -9,7 +9,7 @@ fn main() {
     println!("\n---- calc pitch interval of 2 musical note ----");
 
     let note_1 = score_analyzation::Note {
-        step: score_analyzation::step::Step::C,
+        step: score_analyzation::step::Step::F,
         alter: score_analyzation::alter::Alter::Sharp,
         octave: score_analyzation::octave::Octave(3),
         // duration: Duration(4),
@@ -17,7 +17,7 @@ fn main() {
     println!("note_1 {:?}", note_1);
 
     let note_2 = score_analyzation::Note {
-        step: score_analyzation::step::Step::G,
+        step: score_analyzation::step::Step::C,
         alter: score_analyzation::alter::Alter::Natural,
         octave: score_analyzation::octave::Octave(4),
         // duration: Duration(4),
