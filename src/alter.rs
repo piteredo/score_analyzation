@@ -7,14 +7,16 @@ pub enum Alter {
     DoubleSharp
 }
 
+use Alter::*;
+
 impl Alter {
     pub fn value(&self) -> i32 {
         match self {
-            Alter::DoubleFlat => -2,
-            Alter::Flat => -1,
-            Alter::Natural => 0,
-            Alter::Sharp => 1,
-            Alter::DoubleSharp => 2,
+            DoubleFlat => -2,
+            Flat => -1,
+            Natural => 0,
+            Sharp => 1,
+            DoubleSharp => 2,
         }
     }
 }

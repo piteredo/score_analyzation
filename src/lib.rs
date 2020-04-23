@@ -3,6 +3,7 @@ pub mod alter;
 pub mod octave;
 pub mod interval;
 
+use interval::*;
 use interval::IntervalType::*;
 use interval::Degree::*;
 
@@ -20,16 +21,16 @@ pub struct Note {
     // type: Type,
 }
 
-pub fn interval(note_1: &Note, note_2: &Note) -> interval::Interval {
+pub fn interval(note_1: &Note, note_2: &Note) -> Interval {
     let degree_number = degree_number(note_1, note_2);
     let degree_prefix = degree_prefix(note_1, note_2, &degree_number);
-    interval::Interval {
+    Interval {
         interval_type: degree_prefix,
         degree: degree_number
     }
 }
 
-fn degree_number(note_1: &Note, note_2: &Note) -> interval::Degree {
+fn degree_number(note_1: &Note, note_2: &Note) -> Degree {
     match scale_interval(note_1, note_2) {
         0 => Unison,
         1 => Second,
@@ -44,7 +45,7 @@ fn degree_number(note_1: &Note, note_2: &Note) -> interval::Degree {
     }
 }
 
-fn degree_prefix(note_1: &Note, note_2: &Note, degree_number: &interval::Degree) -> interval::IntervalType {
+fn degree_prefix(note_1: &Note, note_2: &Note, degree_number: &interval::Degree) -> IntervalType {
     let ci = chromatic_interval(note_1, note_2) as i32;
     match degree_number {
         Unison => {
@@ -76,7 +77,7 @@ fn degree_prefix(note_1: &Note, note_2: &Note, degree_number: &interval::Degree)
                 _ => panic!()
             }
         },
-        interval:: Degree::Fourth => {
+        Fourth => {
             match ci - 5 {
                 -2 => DoubleDiminish,
                 -1 => Diminish,
@@ -130,18 +131,18 @@ fn degree_prefix(note_1: &Note, note_2: &Note, degree_number: &interval::Degree)
     }
 }
 
-fn scale_interval(note_1: &Note, note_2: &Note) -> u32 {
-    let note_1_scale_steps = (note_1.octave.value() * OCTAVE_SCALE_STEPS) + note_1.step.scale_index();
-    let note_2_scale_steps = (note_2.octave.value() * OCTAVE_SCALE_STEPS) + note_2.step.scale_index();
-    let result = (note_1_scale_steps as i32 - note_2_scale_steps as i32).abs() as u32 % OCTAVE_SCALE_STEPS;
-    // println!("scale_interval: {}", result);
-    result
+fn scale_interval(n1: &Note, n2: &Note) -> u32 {
+    let n1_oct = n1.octave.value() * OCTAVE_SCALE_STEPS;
+    let n2_oct = n2.octave.value() * OCTAVE_SCALE_STEPS;
+    let n1_steps = n1_oct + n1.step.scale_index();
+    let n2_steps = n2_oct + n2.step.scale_index();
+    (n1_steps as i32 - n2_steps as i32).abs() as u32 % OCTAVE_SCALE_STEPS
 }
 
-fn chromatic_interval(note_1: &Note, note_2: &Note) -> u32 {
-    let note_1_chromatic_steps = ((note_1.octave.value() * OCTAVE_CHROMATIC_STEPS) + note_1.step.chromatic_index()) as i32 + note_1.alter.value();
-    let note_2_chromatic_steps = ((note_2.octave.value() * OCTAVE_CHROMATIC_STEPS) + note_2.step.chromatic_index()) as i32 + note_2.alter.value();
-    let result = (note_1_chromatic_steps as i32 - note_2_chromatic_steps as i32).abs() as u32 % OCTAVE_CHROMATIC_STEPS;
-    // println!("chromatic_interval: {}", result);
-    result
+fn chromatic_interval(n1: &Note, n2: &Note) -> u32 {
+    let n1_oct = n1.octave.value() * OCTAVE_CHROMATIC_STEPS;
+    let n2_oct = n2.octave.value() * OCTAVE_CHROMATIC_STEPS;
+    let n1_steps = (n1_oct + n1.step.chromatic_index()) as i32 + n1.alter.value();
+    let n2_steps = (n2_oct + n2.step.chromatic_index()) as i32 + n2.alter.value();
+    (n1_steps as i32 - n2_steps as i32).abs() as u32 % OCTAVE_CHROMATIC_STEPS
 }

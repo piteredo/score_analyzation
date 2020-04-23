@@ -9,28 +9,30 @@ pub enum Step {
     B
 }
 
+use Step::*;
+
 impl Step {
     pub fn scale_index(&self) -> u32 {
         match self {
-            Step::C => 0,
-            Step::D => 1,
-            Step::E => 2,
-            Step::F => 3,
-            Step::G => 4,
-            Step::A => 5,
-            Step::B => 6,
+            C => 0,
+            D => 1,
+            E => 2,
+            F => 3,
+            G => 4,
+            A => 5,
+            B => 6,
         }
     }
 
     pub fn chromatic_index(&self) -> u32 {
         match self {
-            Step::C => 0,
-            Step::D => 2,
-            Step::E => 4,
-            Step::F => 5,
-            Step::G => 7,
-            Step::A => 9,
-            Step::B => 11,
+            C => 0,
+            D => 2,
+            E => 4,
+            F => 5,
+            G => 7,
+            A => 9,
+            B => 11,
         }
     }
 }
